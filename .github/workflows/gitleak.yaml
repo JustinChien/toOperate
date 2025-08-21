@@ -27,6 +27,7 @@ jobs:
       - name: Run Gitleaks Full History Scan
         run: |
           gitleaks detect --source . \
+            --full-history \
             --report-format sarif \
             --report-path gitleaks-results.sarif \
             --exit-code=1
