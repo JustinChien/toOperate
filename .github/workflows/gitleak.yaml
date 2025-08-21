@@ -40,8 +40,6 @@ jobs:
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
-        with:
-          scan-latest: false # 確保掃描所有歷史，而非只掃描最新
-          scan-history: true # 明確指定掃描整個歷史
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_SCAN_HISTORY: true # 啟用全歷史掃描
