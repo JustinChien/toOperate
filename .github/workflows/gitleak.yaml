@@ -3,28 +3,11 @@ name: Gitleaks Scan
 on:
   push:
     branches: ['**']
-  
   pull_request:
     branches: ['**']
-
   schedule:
     - cron: '0 0 * * *'
-
   workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-        type: choice
-        options:
-        - info
-        - warning
-        - debug
-      tags:
-        description: 'Test scenario tags'
-        required: false
-        type: boolean
 
 jobs:
   gitleaks:
@@ -33,12 +16,18 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 獲取完整歷史記錄以進行全面掃描
+          fetch-depth: 0  # 全歷史掃描的關鍵
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: detect --source . --report-format sarif --report-path gitleaks-results.sarif --exit-code=1
+
+      - name: Upload Gitleaks Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-report
+          path: gitleaks-results.sarif
 
 permissions:
-      contents: read
+  contents: read
