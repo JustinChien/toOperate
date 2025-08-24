@@ -1,3 +1,5 @@
+extends = "gitleaks/common"
+
 [[rules]]
 id = "aws-access-key-id"
 description = "AWS Access Key ID"
