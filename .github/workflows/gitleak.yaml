@@ -28,6 +28,7 @@ jobs:
         run: |
           # 使用 --log-opts="" 確保 Gitleaks 掃描所有提交歷史
           gitleaks detect --source . \
+            --config .github/workflows/.gitleaks.toml \
             --log-opts="" \
             --report-format sarif \
             --report-path gitleaks-results.sarif \

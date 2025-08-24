@@ -1,0 +1,9 @@
+[[rules]]
+description = "AWS Access Key ID"
+regex = "AKIA[0-9A-Z]{16}"
+tags = ["AWS"]
+
+[[rules]]
+description = "AWS Secret Access Key"
+regex = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+tags = ["AWS"]
