@@ -63,5 +63,5 @@ jobs:
           fail-on-severity: high   # fail build if high severity vuln detected
           comment-summary-in-pr: true
           # For push workflows or manual runs, explicitly set base/head refs if available
-          base_ref: ${{ github.event.pull_request.base.ref || github.ref }}
-          head_ref: ${{ github.event.pull_request.head.ref || github.sha }}
+          base-ref: ${{ github.event.pull_request.base.ref || github.ref }}
+          head-ref: ${{ github.event.pull_request.head.ref || github.sha }}
