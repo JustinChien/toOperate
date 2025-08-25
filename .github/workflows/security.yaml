@@ -35,7 +35,14 @@ jobs:
             gitleaks detect --source . --redact --exit-code=2 --report-format=sarif --report-path=results.sarif
           else
             echo "Running incremental scan from $START_REF..$END_REF"
-            gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent $START_REF..$END_REF || true
+            gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent $START_REF..$END_REF
+          fi
+
+      - name: Ensure SARIF exists
+        if: always()
+        run: |
+          if [ ! -f results.sarif ]; then
+            echo "{}" > results.sarif
           fi
 
       - name: Upload Gitleaks Report
@@ -47,6 +54,7 @@ jobs:
 
   dependency-review:
     name: Dependency Review (Vulnerability Scan)
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -62,6 +70,3 @@ jobs:
         with:
           fail-on-severity: high   # fail build if high severity vuln detected
           comment-summary-in-pr: true
-          # For push workflows or manual runs, explicitly set base/head refs if available
-          base-ref: ${{ github.event.pull_request.base.ref || github.ref }}
-          head-ref: ${{ github.event.pull_request.head.ref || github.sha }}
