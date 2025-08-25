@@ -1,0 +1,28 @@
+repos:
+  # 🔑 Gitleaks - secret scanning
+  - repo: https://github.com/zricethezav/gitleaks
+    rev: v8.18.4   # pick a stable release
+    hooks:
+      - id: gitleaks
+        args: ["--redact"]
+
+  # 📦 Detect common dependency vulnerabilities (basic check)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-added-large-files
+        args: ["--maxkb=512"]  # prevent committing >512KB accidental files
+
+  # 🧹 Formatting / safety extras (optional but recommended)
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v9.4.0
+    hooks:
+      - id: eslint
+        additional_dependencies: ["eslint@9.4.0"]
