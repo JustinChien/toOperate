@@ -25,18 +25,9 @@ jobs:
           sudo mv gitleaks /usr/local/bin/
           rm gitleaks.tar.gz
 
-      - name: Run Gitleaks
+      - name: Run Gitleaks (full scan)
         run: |
-          # use github event range when available, fallback to full scan
-          START_REF="${{ github.event.before }}"
-          END_REF="${{ github.sha }}"
-          if [ -z "$START_REF" ] || [ "$START_REF" = "0000000000000000000000000000000000000000" ]; then
-            echo "No start ref available, running full repo scan"
-            gitleaks detect --source . --redact --exit-code=2 --report-format=sarif --report-path=results.sarif
-          else
-            echo "Running incremental scan from $START_REF..$END_REF"
-            gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent $START_REF..$END_REF
-          fi
+          gitleaks detect --source . --redact --exit-code=2 --report-format=sarif --report-path=results.sarif
 
       - name: Ensure SARIF exists
         if: always()
