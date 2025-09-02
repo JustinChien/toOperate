@@ -1,0 +1,21 @@
+# Environment / secrets
+.env
+.env.*
+secrets/
+*.secret
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+env/
+venv/
+# IDEs
+.vscode/
+.idea/
+# OS
+.DS_Store
+# General
+*.log
+results.sarif
+
+
