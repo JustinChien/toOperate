@@ -1,1 +1,5 @@
+#  Repo Protection
 pre-commit
+git-filter-repo
+
+flask==2.2.5
