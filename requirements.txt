@@ -1,2 +1,5 @@
+#  Repo Protection
 pre-commit
-django==2.2.0
+git-filter-repo
+
+flask==2.2.5
